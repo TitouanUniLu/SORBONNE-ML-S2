@@ -4,18 +4,22 @@ import matplotlib.pyplot as plt
 from mltools import plot_data, plot_frontiere, make_grid, gen_arti
 
 def mse(w,x,y):
-    # a implémenter
-    pass
+    return np.transpose(x@w-y)**2
+
+def reglog(w,x,y):
+    y=np.where(y==-1,0,1) # On convertit les -1 en 0 pour 
+    X=np.exp(-(x@w))
+    return -np.sum((np.log(1+X))+np.log(X)@(1-y))
 
 def mse_grad(w,x,y):
-    # a implémenter
-    pass
-def reglog(w,x,y):
-    #a implémenter
-    pass
+    y=np.where(y==-1,0,1)
+    return 2*np.transpose(x)@(x@w-y)
+
 def reglog_grad(w,x,y):
-    #a implémenter
-    pass
+    y=np.where(y==-1,0,1)
+    pred=1/(1+np.exp(-(x@w)))
+    return np.transpose(x)@(y-pred)
+    
 
 def check_fonctions():
     ## On fixe la seed de l'aléatoire pour vérifier les fonctions
